@@ -85,4 +85,9 @@ public class NetworkController
     {
         return client.Get(req);
     }
+
+    public void CreateGame(Game game)
+    {
+
+    }
 }
