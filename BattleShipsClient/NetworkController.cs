@@ -3,6 +3,7 @@ using Raylib_cs;
 
 public class NetworkController
 {
+    string hostName = System.Net.Dns.GetHostName();
     RestClient client = new();
 
     public int lobbyID;
