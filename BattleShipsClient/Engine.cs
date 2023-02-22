@@ -29,8 +29,7 @@ public class Engine
 
     public Engine()
     {
-        // networkController.ConnectClient();
-        networkController.CreateGame(game);
+        networkController.ConnectClient();
     }
 
     public void Run()
@@ -59,10 +58,10 @@ public class Engine
 
     private void Browser()
     {
-        Rectangle playRec = new(350, 100, 300, 100);
+        Rectangle browseRec = new(350, 100, 300, 100);
         string playText = "Start Game!";
         Rectangle createRec = new(350, 250, 300, 100);
-        string createText = "Create Game";
+        string createText = "Join Game";
         Rectangle serverRec = new(350, 400, 300, 100);
         string serverText = "Switch Server";
 
@@ -71,10 +70,10 @@ public class Engine
         Raylib.BeginDrawing();
         Raylib.ClearBackground(Color.WHITE);
 
-        Raylib.DrawRectangle((int)playRec.x - 10, (int)playRec.y - 10, (int)playRec.width + 20, (int)playRec.height + 20, Color.BLACK);
-        if (Raylib.CheckCollisionPointRec(mousePos, playRec)) Raylib.DrawRectangleRec(playRec, Color.GRAY);
-        else Raylib.DrawRectangleRec(playRec, Color.LIGHTGRAY);
-        Raylib.DrawText(playText, 390, (int)playRec.y + 25, 32, Color.RED);
+        Raylib.DrawRectangle((int)browseRec.x - 10, (int)browseRec.y - 10, (int)browseRec.width + 20, (int)browseRec.height + 20, Color.BLACK);
+        if (Raylib.CheckCollisionPointRec(mousePos, browseRec)) Raylib.DrawRectangleRec(browseRec, Color.GRAY);
+        else Raylib.DrawRectangleRec(browseRec, Color.LIGHTGRAY);
+        Raylib.DrawText(playText, 390, (int)browseRec.y + 25, 32, Color.RED);
 
         Raylib.DrawRectangle((int)createRec.x - 10, (int)createRec.y - 10, (int)createRec.width + 20, (int)createRec.height + 20, Color.BLACK);
         if (Raylib.CheckCollisionPointRec(mousePos, createRec)) Raylib.DrawRectangleRec(createRec, Color.GRAY);
@@ -90,22 +89,22 @@ public class Engine
 
         if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
         {
-            if (Raylib.CheckCollisionPointRec(mousePos, playRec) && game is not null)
+            if (Raylib.CheckCollisionPointRec(mousePos, browseRec))
             {
-                networkController.CreateGame(game);
-                current = MenuState.Play;
+                networkController.BrowseGames(ref game);
             }
 
             if (Raylib.CheckCollisionPointRec(mousePos, createRec))
             {
-
+                creator.CreateGame(ref game);
+                networkController.CreateGame(game);
+                current = MenuState.Play;
             }
 
             if (Raylib.CheckCollisionPointRec(mousePos, serverRec))
             {
-
+                networkController.ConnectClient();
             }
-
         }
     }
 }

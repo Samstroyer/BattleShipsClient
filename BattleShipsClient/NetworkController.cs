@@ -1,9 +1,10 @@
+using System.Text.Json;
 using RestSharp;
 using Raylib_cs;
 
 public class NetworkController
 {
-    string hostName = System.Net.Dns.GetHostName();
+    string identifier = System.Net.Dns.GetHostName(); //name
     RestClient client = new();
 
     public int lobbyID;
@@ -89,6 +90,52 @@ public class NetworkController
 
     public void CreateGame(Game game)
     {
+        try
+        {
+            RestRequest requestVar = new($"/CreateGame/{identifier}");
+            requestVar.AddBody(game);
+            client.Post(requestVar);
+        }
+        catch (Exception e)
+        {
+            CustomExceptionThrower(e);
+        }
+    }
 
+    public void BrowseGames(ref Game game)
+    {
+        try
+        {
+            RestRequest browse = new("/BrowseGames");
+            string namesJson = client.Get(browse).Content;
+            List<string> gameNames = JsonSerializer.Deserialize<List<string>>(namesJson);
+
+            while ()
+            {
+
+            }
+        }
+        catch (Exception e)
+        {
+            CustomExceptionThrower(e);
+        }
+    }
+
+    private void CustomExceptionThrower(Exception e)
+    {
+        while (true)
+        {
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(Color.WHITE);
+
+            Raylib.DrawText("ERROR", 400, 10, 48, Color.RED);
+            Raylib.DrawText($"Exception: \n{e}", 20, 100, 22, Color.GREEN);
+            Raylib.DrawText("Press any key to go back", 230, 700, 48, Color.BLUE);
+
+            Raylib.EndDrawing();
+
+            KeyboardKey key = (KeyboardKey)Raylib.GetKeyPressed();
+            if (key != KeyboardKey.KEY_NULL) break;
+        }
     }
 }
