@@ -48,7 +48,7 @@ public class Engine
                 break;
             case MenuState.Play:
                 session = new();
-                session.RunGame();
+                session.RunGame(ref networkController);
                 break;
         }
 
@@ -59,9 +59,9 @@ public class Engine
     private void Browser()
     {
         Rectangle browseRec = new(350, 100, 300, 100);
-        string playText = "Start Game!";
+        string playText = "Join Game!";
         Rectangle createRec = new(350, 250, 300, 100);
-        string createText = "Join Game";
+        string createText = "Create Game";
         Rectangle serverRec = new(350, 400, 300, 100);
         string serverText = "Switch Server";
 

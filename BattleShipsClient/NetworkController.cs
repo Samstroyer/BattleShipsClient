@@ -110,10 +110,10 @@ public class NetworkController
             string namesJson = client.Get(browse).Content;
             List<string> gameNames = JsonSerializer.Deserialize<List<string>>(namesJson);
 
-            while ()
-            {
+            // while ()
+            // {
 
-            }
+            // }
         }
         catch (Exception e)
         {
